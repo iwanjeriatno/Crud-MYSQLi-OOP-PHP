@@ -1,21 +1,21 @@
 <?php
-include 'koneksi.php';
+include 'ConnectDB.php';
 
 $id = $_GET['id'];
 
-$query = "SELECT * FROM mahasiswa WHERE id='".$id."' ";
-$result = $mysqli->query( $query );
-$data = $result->fetch_object();
+$sql = "SELECT * FROM mahasiswa WHERE id='$id' ";
+$hasil = $connect->query( $sql );
+$data = $hasil->fetch_object();
 
-if(isset( $_POST['edit'] )){
+if(isset( $_POST['simpan'] )){
 $stambuk = $_POST['stambuk'];
 $nama = $_POST['nama'];
 
-    $query = "UPDATE mahasiswa
-                SET stambuk='".$stambuk."', nama='".$nama."' WHERE id='".$id."' ";
+    $sql = "UPDATE mahasiswa
+                SET stambuk='$stambuk', nama='$nama' WHERE id='$id' ";
 
-    if( $mysqli->query($query) ) {
-        header('Location: index.php');
+    if( $connect->query($sql) ) {
+        header('Location: Read.php');
     }else{
         echo "Edit Data Error!!";
     }
@@ -24,7 +24,7 @@ $nama = $_POST['nama'];
 ?>
 <!--we have our html form here where new user information will be entered-->
 <form action='#' method='post' border='0'>
-    <table>
+    <table align="center">
         <tr>
             <td>Stambuk</td>
             <td><input type='text' name='stambuk' value='<?php echo $data->stambuk;  ?>' /></td>
@@ -34,8 +34,9 @@ $nama = $_POST['nama'];
             <td><input type='text' name='nama' value='<?php echo $data->nama;  ?>' /></td>
         </tr>
         <tr>
+            <td></td>
             <td>
-                <input type='submit' value='Edit' name='edit' />
+                <input type='submit' value='Update' name='simpan' />
             </td>
         </tr>
         </table>

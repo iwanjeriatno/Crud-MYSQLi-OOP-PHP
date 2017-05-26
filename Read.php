@@ -4,18 +4,20 @@
 </head>
 <body>
     <?php
-        include 'koneksi.php';
-        $query = "select * from mahasiswa";
-        $result = $mysqli->query( $query );
-        $num_results = $result->num_rows;
+        include 'ConnectDB.php';
+        $sql = "SELECT * FROM mahasiswa";
+        $hasil = $connect->query( $sql );
+        $jumlah_data = $hasil->num_rows;
     ?>
 
-<div><a href='insert.php'>Tambah Data</a></div>
 
 <?php
-    if( $num_results > 0){
+    if( $jumlah_data > 0){
 ?>
-<table border='1'>
+<table border='1' align="center">
+    <caption>
+        <a href='Create.php'>Tambah Data</a>
+    </caption>
     <tr>
         <th>ID</th>
         <th>Nama</th>
@@ -23,16 +25,16 @@
         <th>Action</th>
     </tr>
 <?php
-    while( $data = $result->fetch_object() ){
+    while( $data = $hasil->fetch_object() ){
 
         echo '<tr>';
             echo '<td>'.$data->id.'</td>';
             echo '<td>'.$data->nama.'</td>';
             echo '<td>'.$data->stambuk.'</td>';
             echo '<td>';
-                echo '<a href="edit.php?id='.$data->id.'">Edit</a>';
+                echo '<a href="Update.php?id='.$data->id.'">Edit</a>';
                  echo '|';
-                echo '<a href="delete.php?id='.$data->id.'">Delete</a>';
+                echo '<a href="Delete.php?id='.$data->id.'">Delete</a>';
             echo '</td>';
         echo '</tr>';
 
